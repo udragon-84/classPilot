@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -35,15 +37,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void registerMemberValidation(MemberDto paramMemberDto) {
-        this.memberRepository.findByEmail(paramMemberDto.getEmail())
-                .ifPresent(memberEntity -> {
-                    throw new MemberException(String.format("%s 해당 이메일은 이미 등록된 이메일 입니다.", memberEntity.getEmail()));
-                });
+        this.validateDuplicateField(() -> this.memberRepository.findByEmail(paramMemberDto.getEmail()),
+                String.format("%s 해당 이메일은 이미 등록된 이메일 입니다.", paramMemberDto.getEmail()));
 
-        this.memberRepository.findByPhoneNumber(paramMemberDto.getPhoneNumber())
-                .ifPresent(memberEntity -> {
-                    throw new MemberException(String.format("%s 해당 전화번호는 이미 등록된 전화번호 입니다.", memberEntity.getPhoneNumber()));
-                });
+        this.validateDuplicateField(() -> this.memberRepository.findByEmail(paramMemberDto.getPhoneNumber()),
+                String.format("%s 해당 전화번호는 이미 등록된 전화번호 입니다.", paramMemberDto.getPhoneNumber()));
+    }
+
+    private void validateDuplicateField(Supplier<Optional<MemberEntity>> findMemberFunction, String errorMessage) {
+        findMemberFunction.get().ifPresent(memberEntity -> {
+            throw new MemberException(errorMessage);
+        });
     }
 
     @Override
