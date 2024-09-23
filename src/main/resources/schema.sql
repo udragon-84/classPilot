@@ -12,9 +12,8 @@ CREATE TABLE member (
     modifiedBy VARCHAR(100)
 );
 -- createdAt 및 modifiedAt에 대한 인덱스 생성
-CREATE INDEX idx_member_email_01 ON member(email);
-CREATE INDEX idx_member_createdAt_02 ON member(createdAt);
-CREATE INDEX idx_member_modifiedAt_03 ON member(modifiedAt);
+CREATE INDEX idx_user_createdAt_02 ON member(createdAt);
+CREATE INDEX idx_user_modifiedAt_03 ON member(modifiedAt);
 
 -- Lecture 테이블 생성
 CREATE TABLE lecture (
@@ -27,7 +26,7 @@ CREATE TABLE lecture (
     createdBy VARCHAR(100) NOT NULL,
     modifiedAt DATETIME(6),
     modifiedBy VARCHAR(100),
-    CONSTRAINT fk_instructor_member FOREIGN KEY (instructorId) REFERENCES member(memberId)
+    CONSTRAINT fk_instructor_member FOREIGN KEY (instructorId) REFERENCES member(memberId) ON DELETE SET NULL
 );
 
 -- createdAt 및 modifiedAt에 대한 인덱스 생성
@@ -47,8 +46,8 @@ CREATE TABLE enrollment (
     createdBy VARCHAR(100) NOT NULL,
     modifiedAt DATETIME(6),
     modifiedBy VARCHAR(100),
-    CONSTRAINT fk_member_enrollment FOREIGN KEY (memberId) REFERENCES member(memberId),
-    CONSTRAINT fk_lecture_enrollment FOREIGN KEY (lectureId) REFERENCES lecture(lectureId),
+    CONSTRAINT fk_member_enrollment FOREIGN KEY (memberId) REFERENCES member(memberId) ON DELETE CASCADE,
+    CONSTRAINT fk_lecture_enrollment FOREIGN KEY (lectureId) REFERENCES lecture(lectureId) ON DELETE CASCADE,
     CONSTRAINT chk_max_students CHECK (currentStudents <= maxStudents)
 );
 

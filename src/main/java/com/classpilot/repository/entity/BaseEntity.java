@@ -20,17 +20,19 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(name = "CREATEDAT", updatable = false)
     private LocalDateTime createdAt;  // 등록일
 
     @CreatedBy
-    @Column(updatable = false)
+    @Column(name = "CREATEDBY", updatable = false)
     private String createdBy;  // 등록자
 
     @LastModifiedDate
+    @Column(name="MODIFIEDAT")
     private LocalDateTime modifiedAt;  // 수정일
 
     @LastModifiedBy
+    @Column(name="MODIFIEDBY")
     private String modifiedBy;  // 수정자
 
 }

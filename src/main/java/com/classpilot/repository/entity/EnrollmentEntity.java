@@ -9,22 +9,29 @@ import lombok.*;
 @NoArgsConstructor  // 기본 생성자 (JPA 용)
 @AllArgsConstructor // 모든 필드를 포함하는 생성자 (Builder 사용 시 필요)
 @Entity
-public class Enrollment extends BaseEntity {
+@Table(name = "enrollment")
+public class EnrollmentEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ENROLLMENTID")
     private Long enrollmentId;
 
     // Member 엔티티와 다대일 관계
     @ManyToOne
-    @JoinColumn(name = "memberId")
-    private Member member;
+    @JoinColumn(name = "MEMBERID")
+    private MemberEntity memberEntity;
 
     // Lecture 엔티티와 다대일 관계
     @ManyToOne
-    @JoinColumn(name = "lectureId")
-    private Lecture lecture;
+    @JoinColumn(name = "LECTUREID")
+    private LectureEntity lectureEntity;
 
+    @Column(name="CURRENTSTUDENTS")
     private int currentStudents;
+
+    @Column(name="PRICE")
     private int price;
+
+    @Column(name="MAXSTUDENTS")
     private int maxStudents;
 }
