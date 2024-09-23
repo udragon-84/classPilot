@@ -11,4 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "수강신청 관리 Api", description = "월급쟁이부자들 수강신청 관리 Api 명세")
 public class ClassPilotController {
 
+
+
 }
