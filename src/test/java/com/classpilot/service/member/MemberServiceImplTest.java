@@ -39,7 +39,7 @@ public class MemberServiceImplTest {
         memberDto = MemberDto.builder()
                 .name("유창근")
                 .email("youzang7@gmail.com")
-                .phoneNumber("010-7318-5308")
+                .phoneNumber("010-5555-7777")
                 .password("TestPassword123")
                 .memberType(MemberType.STUDENT)
                 .build();
@@ -96,7 +96,7 @@ public class MemberServiceImplTest {
         });
 
         // 예외 메시지 검증
-        assertEquals("010-7318-5308 해당 전화번호는 이미 등록된 전화번호 입니다.", exception.getMessage());
+        assertEquals("010-5555-7777 해당 전화번호는 이미 등록된 전화번호 입니다.", exception.getMessage());
         verify(memberRepository, never()).save(any(MemberEntity.class)); // 저장되지 않음
     }
 

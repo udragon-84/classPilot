@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
         this.validateDuplicateField(() -> this.memberRepository.findByEmail(paramMemberDto.getEmail()),
                 String.format("%s 해당 이메일은 이미 등록된 이메일 입니다.", paramMemberDto.getEmail()));
 
-        this.validateDuplicateField(() -> this.memberRepository.findByEmail(paramMemberDto.getPhoneNumber()),
+        this.validateDuplicateField(() -> this.memberRepository.findByPhoneNumber(paramMemberDto.getPhoneNumber()),
                 String.format("%s 해당 전화번호는 이미 등록된 전화번호 입니다.", paramMemberDto.getPhoneNumber()));
     }
 
