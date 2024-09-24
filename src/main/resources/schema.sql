@@ -39,18 +39,13 @@ CREATE TABLE enrollment (
     enrollmentId BIGINT AUTO_INCREMENT PRIMARY KEY,
     memberId BIGINT NOT NULL,
     lectureId BIGINT NOT NULL,
-    currentStudents INT NOT NULL,
-    price INT NOT NULL,
-    maxStudents INT NOT NULL,
     createdAt DATETIME(6) NOT NULL,
     createdBy VARCHAR(100) NOT NULL,
     modifiedAt DATETIME(6),
     modifiedBy VARCHAR(100),
     CONSTRAINT fk_member_enrollment FOREIGN KEY (memberId) REFERENCES member(memberId) ON DELETE CASCADE,
-    CONSTRAINT fk_lecture_enrollment FOREIGN KEY (lectureId) REFERENCES lecture(lectureId) ON DELETE CASCADE,
-    CONSTRAINT chk_max_students CHECK (currentStudents <= maxStudents)
+    CONSTRAINT fk_lecture_enrollment FOREIGN KEY (lectureId) REFERENCES lecture(lectureId) ON DELETE CASCADE
 );
-
 -- createdAt 및 modifiedAt에 대한 인덱스 생성
 CREATE INDEX idx_enrollment_createdAt ON enrollment(createdAt);
 CREATE INDEX idx_enrollment_modifiedAt ON enrollment(modifiedAt);

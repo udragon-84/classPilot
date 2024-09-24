@@ -26,12 +26,4 @@ public class EnrollmentEntity extends BaseEntity {
     @JoinColumn(name = "LECTUREID")
     private LectureEntity lectureEntity;
 
-    @Column(name="CURRENTSTUDENTS")
-    private int currentStudents;
-
-    @Column(name="PRICE")
-    private int price;
-
-    @Column(name="MAXSTUDENTS")
-    private int maxStudents;
 }

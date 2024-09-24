@@ -3,6 +3,8 @@ package com.classpilot.repository.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @ToString
 @Getter
 @Setter
@@ -26,7 +28,13 @@ public class LectureEntity extends BaseEntity {
     @Column(name="PRICE")
     private int price;
 
+    @Column(name = "INSTRUCTORID")
+    private Long instructorId;
+
     @ManyToOne
-    @JoinColumn(name = "MEMBERID")
+    @JoinColumn(name = "INSTRUCTORID", insertable = false, updatable = false)
     private MemberEntity instructor;
+
+    @OneToMany(mappedBy = "lectureEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<EnrollmentEntity> enrollmentEntityList;
 }
