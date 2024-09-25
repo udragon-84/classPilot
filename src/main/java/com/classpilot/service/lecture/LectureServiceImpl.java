@@ -1,14 +1,21 @@
 package com.classpilot.service.lecture;
 
+import com.classpilot.common.exception.DomainException;
 import com.classpilot.repository.LectureRepository;
 import com.classpilot.service.lecture.convert.LectureConverter;
 import com.classpilot.service.lecture.dto.LectureDto;
+import com.classpilot.service.lecture.dto.LectureRegisterDto;
 import com.classpilot.service.lecture.dto.LectureSearchCriteriaDto;
+import com.classpilot.service.member.MemberService;
+import com.classpilot.service.member.dto.MemberDto;
+import com.classpilot.service.member.dto.MemberType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 @Slf4j
@@ -17,6 +24,9 @@ public class LectureServiceImpl implements LectureService {
 
     @Autowired
     private LectureRepository lectureRepository;
+
+    @Autowired
+    private MemberService memberService;
 
     @Override
     @Transactional(readOnly = true)
@@ -38,6 +48,22 @@ public class LectureServiceImpl implements LectureService {
                 .findLecturesWithDynamicSorting(searchCriteria.getLectureName(), sortField, sortDirection, pageable);
 
         return lectureEntities.map(LectureConverter::toDomain);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public LectureDto registerLecture(LectureRegisterDto lectureDto) {
+        MemberDto memberDto = this.memberService.findMemberById(lectureDto.getMemberId());
+        Optional.ofNullable(memberDto)
+                .ifPresent(dto -> {
+                    if (MemberType.INSTRUCTOR != dto.getMemberType()) {
+                        throw new DomainException("강의등록은 강사로 등록된 회원만 등록가능합니다.");
+                    }
+                });
+
+        return Optional.of(this.lectureRepository.save(LectureConverter.toEntity(lectureDto)))
+                .map(dto -> LectureConverter.toDomain(dto, memberDto.getName()))
+                .orElseThrow(() -> new DomainException("강의 등록에 실패 했습니다."));
     }
 
 }

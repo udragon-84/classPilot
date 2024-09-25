@@ -1,6 +1,6 @@
 package com.classpilot.service.member;
 
-import com.classpilot.common.exception.MemberException;
+import com.classpilot.common.exception.DomainException;
 import com.classpilot.repository.MemberRepository;
 import com.classpilot.repository.entity.MemberEntity;
 import com.classpilot.service.member.convert.MemberConverter;
@@ -74,7 +74,7 @@ public class MemberServiceImplTest {
         when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(MemberConverter.toEntity(memberDto)));
 
         // 회원 등록 수행 시 예외 발생
-        MemberException exception = assertThrows(MemberException.class, () -> {
+        DomainException exception = assertThrows(DomainException.class, () -> {
             memberService.registerMember(memberDto);
         });
 
@@ -91,7 +91,7 @@ public class MemberServiceImplTest {
         when(memberRepository.findByPhoneNumber(anyString())).thenReturn(Optional.of(MemberConverter.toEntity(memberDto)));
 
         // 회원 등록 수행 시 예외 발생
-        MemberException exception = assertThrows(MemberException.class, () -> {
+        DomainException exception = assertThrows(DomainException.class, () -> {
             memberService.registerMember(memberDto);
         });
 

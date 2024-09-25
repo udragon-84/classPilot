@@ -19,6 +19,7 @@ public class MemberConverter {
 
     public static MemberDto toDomain(MemberEntity memberEntity) {
         return MemberDto.builder()
+                .memberId(memberEntity.getMemberId())
                 .name(memberEntity.getName())
                 .email(memberEntity.getEmail())
                 .phoneNumber(memberEntity.getPhoneNumber())

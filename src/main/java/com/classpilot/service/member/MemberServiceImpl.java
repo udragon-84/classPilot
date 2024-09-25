@@ -1,5 +1,5 @@
 package com.classpilot.service.member;
-import com.classpilot.common.exception.MemberException;
+import com.classpilot.common.exception.DomainException;
 import com.classpilot.repository.MemberRepository;
 import com.classpilot.repository.entity.MemberEntity;
 import com.classpilot.service.member.convert.MemberConverter;
@@ -46,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
 
     private void validateDuplicateField(Supplier<Optional<MemberEntity>> findMemberFunction, String errorMessage) {
         findMemberFunction.get().ifPresent(memberEntity -> {
-            throw new MemberException(errorMessage);
+            throw new DomainException(errorMessage);
         });
     }
 
@@ -57,5 +57,13 @@ public class MemberServiceImpl implements MemberService {
                 .stream()
                 .map(MemberConverter::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MemberDto findMemberById(Long id) {
+        return this.memberRepository.findById(id)
+                .map(MemberConverter::toDomain)
+                .orElse(null);
     }
 }

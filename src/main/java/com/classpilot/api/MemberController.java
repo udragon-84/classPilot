@@ -4,6 +4,7 @@ import com.classpilot.api.response.ClassPilotResponse;
 import com.classpilot.service.member.MemberService;
 import com.classpilot.service.member.dto.MemberDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,9 +30,21 @@ public class MemberController {
      * @return {@link ClassPilotResponse<List<MemberDto>>}
      */
     @Operation(summary = "전체 회원 조회 Api", description = "전체 회원 조회 Api")
-    @GetMapping(value = "/all")
+    @GetMapping(value = "/search/all")
     public ClassPilotResponse<List<MemberDto>> findAllMembers() {
         return new ClassPilotResponse<>(this.memberService.findAllMembers());
+    }
+
+    /**
+     * 특정회원 정보 조회
+     * @return {@link ClassPilotResponse<List<MemberDto>>}
+     */
+    @Operation(summary = "수강 회원 조회 Api", description = "수강 회원 조회 Api")
+    @GetMapping(value = "/search")
+    public ClassPilotResponse<MemberDto> findByMembers(
+            @Parameter(description = "회원ID", name = "memberId")
+            @RequestParam(name="memberId", required = true) Long memberId) {
+        return new ClassPilotResponse<>(this.memberService.findMemberById(memberId));
     }
 
     /**

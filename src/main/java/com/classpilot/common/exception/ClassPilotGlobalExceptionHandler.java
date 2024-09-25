@@ -65,8 +65,8 @@ public class ClassPilotGlobalExceptionHandler {
      * @param ex 데이터베이스 제약조건 에러 정보
      * @return {@link ResponseEntity<ClassPilotResponse>}
      */
-    @ExceptionHandler(MemberException.class)
-    public ResponseEntity<ClassPilotResponse<String>> handleMemberException(MemberException ex) {
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<ClassPilotResponse<String>> handleMemberException(DomainException ex) {
         ClassPilotResponse<String> response = new ClassPilotResponse<>(
                 Boolean.FALSE,  // 실패 응답
                 HttpStatus.INTERNAL_SERVER_ERROR,  // 상태 코드 500

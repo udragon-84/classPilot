@@ -1,6 +1,7 @@
 package com.classpilot.service.lecture.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Builder
@@ -16,15 +17,18 @@ public class LectureDto {
     private long lectureId;
 
     @Schema(description = "강의명", example = "너나위 내집마련 기초반")
+    @NotNull(message = "강의명 필수 입력 정보 입니다.")
     private String lectureName;
 
     @Schema(description = "강의수강료", example = "100000")
+    @NotNull(message = "강의수강료는 필수 입력 정보 입니다.")
     private int price;
 
     @Schema(description = "강사명", example = "너나위")
     private String instructorName;
 
     @Schema(description = "강의 수강 인원수", example = "10")
+    @NotNull(message = "강의 수강 인원수는 필수 입력 정보 입니다.")
     private int maxStudents;
 
     @Schema(description = "현재 수강 인원수", example = "8")

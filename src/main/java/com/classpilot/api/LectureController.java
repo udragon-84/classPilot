@@ -3,10 +3,16 @@ package com.classpilot.api;
 import com.classpilot.api.response.ClassPilotResponse;
 import com.classpilot.service.lecture.LectureService;
 import com.classpilot.service.lecture.dto.LectureDto;
+import com.classpilot.service.lecture.dto.LectureRegisterDto;
 import com.classpilot.service.lecture.dto.LectureSearchCriteriaDto;
+import com.classpilot.service.member.dto.MemberDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +46,24 @@ public class LectureController {
         lectureSearchCriteriaDto.setSortBy(sortBy);
         log.info("LectureController.getLectures lectureSearchCriteriaDto: {}", lectureSearchCriteriaDto);
         return new ClassPilotResponse<>(this.lectureService.getLectures(lectureSearchCriteriaDto));
+    }
+
+    /**
+     * 강의 등록 api
+     * @param lectureDto 강의등록 정보
+     * @return {@link ClassPilotResponse<Long>}
+     */
+    @Operation(summary = "강의 등록 Api", description = "월급쟁이부자들 강의 등록 Api")
+    @PostMapping("/register")
+    public ClassPilotResponse<LectureDto> registerLecture(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "강의 정보 등록 json 파라메터 정의",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = MemberDto.class), examples = @ExampleObject(
+                            value = "{\"memberId\": 1, \"lectureName\": \"너나위의 내집마련 중급반\", \"maxStudents\": 20, \"price\": 200000 }")))
+            @Valid @RequestBody LectureRegisterDto lectureDto) {
+        log.info("LectureController.registerLecture lectureDto: {}", lectureDto);
+        return new ClassPilotResponse<>(this.lectureService.registerLecture(lectureDto));
     }
 
 }

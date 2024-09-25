@@ -15,6 +15,9 @@ import jakarta.validation.constraints.Pattern;
 @Schema(description = "회원 정보 Domain", name = "MemberDto")
 public class MemberDto {
 
+    @Schema(description = "회원 ID", example = "1")
+    private Long memberId;
+
     @Schema(description = "회원 이름", example = "유창근")
     @NotNull(message = "이름은 필수 입력 정보 입니다.")
     private String name;
