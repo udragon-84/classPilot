@@ -18,7 +18,7 @@ public class LectureRepositoryCustomerImpl implements LectureRepositoryCustomer 
     public Page<Object[]> findLecturesWithDynamicSorting(String lectureName, String sortField, String sortDirection, Pageable pageable) {
         String queryStr = "SELECT lec.lectureId, lec.lectureName, lec.price, ins.name, lec.maxStudents, " +
                 "COUNT(enr.enrollmentId) AS currentStudentCnt, " +
-                "TRUNCATE((COUNT(enr.enrollmentId) / lec.maxStudents) * 100, 3) AS enrollmentRate, " +
+                "ROUND((CAST(COUNT(ENR.enrollmentId) AS DOUBLE) / LEC.maxStudents) * 100, 3) AS enrollmentRate, " +
                 "MAX(lec.createdAt) AS createdAt " +
                 "FROM lecture lec " +
                 "LEFT OUTER JOIN member ins ON lec.instructorId = ins.memberId " +
@@ -26,7 +26,7 @@ public class LectureRepositoryCustomerImpl implements LectureRepositoryCustomer 
                 "WHERE ins.memberType = 'INSTRUCTOR' " +
                 "AND (? IS NULL OR lec.lectureName LIKE CONCAT(?, '%')) " +
                 "GROUP BY lec.lectureId, lec.lectureName, lec.price, ins.name, lec.maxStudents " +
-                "ORDER BY " + sortField + " " + sortDirection;
+                "ORDER BY " + sortField + " " + sortDirection + ", lec.lectureId ASC";
 
         Query query = entityManager.createNativeQuery(queryStr);
         query.setParameter(1, lectureName);

@@ -13,7 +13,7 @@ import lombok.*;
 public class LectureDto {
 
     @Schema(description = "강의 ID", example = "1")
-    private Long lectureId;
+    private long lectureId;
 
     @Schema(description = "강의명", example = "너나위 내집마련 기초반")
     private String lectureName;
@@ -25,10 +25,10 @@ public class LectureDto {
     private String instructorName;
 
     @Schema(description = "강의 수강 인원수", example = "10")
-    private long maxStudents;
+    private int maxStudents;
 
     @Schema(description = "현재 수강 인원수", example = "8")
-    private long currentStudentCnt;
+    private int currentStudentCnt;
 
     @Schema(description = "강의 신청율", example = "4.537")
     private double enrollmentRate;

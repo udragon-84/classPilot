@@ -8,9 +8,9 @@ public class LectureConverter {
                 .lectureName((String)row[1])
                 .price((Integer)row[2])
                 .instructorName((String)row[3])
-                .maxStudents((Long)row[4])
-                .currentStudentCnt((Integer)row[5])
-                .enrollmentRate((double)row[6])
+                .maxStudents((Integer)row[4])
+                .currentStudentCnt(((Long)row[5]).intValue())
+                .enrollmentRate((Double)row[6])
                 .build();
     }
 
