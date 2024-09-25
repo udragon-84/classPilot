@@ -75,4 +75,22 @@ public class ClassPilotGlobalExceptionHandler {
         );
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * 그 외 나머지 Exception 처리
+     * @param ex 데이터베이스 제약조건 에러 정보
+     * @return {@link ResponseEntity<ClassPilotResponse>}
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ClassPilotResponse<String>> handleException(Exception ex) {
+        log.error("ClassPilotGlobalExceptionHandler.handleException", ex);
+        ClassPilotResponse<String> response = new ClassPilotResponse<>(
+                Boolean.FALSE,  // 실패 응답
+                HttpStatus.INTERNAL_SERVER_ERROR,  // 상태 코드 500
+                "ClassPilot Domain Error",  // 메시지
+                ex.getMessage()  // 에러 세부 정보
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
