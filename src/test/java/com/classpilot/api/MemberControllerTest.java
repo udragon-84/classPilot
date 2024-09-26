@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ClassPilotControllerTest {
+public class MemberControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -51,7 +51,7 @@ public class ClassPilotControllerTest {
 
         when(this.memberService.findAllMembers()).thenReturn(List.of(memberDto));
 
-        mockMvc.perform(get("/members/all"))
+        mockMvc.perform(get("/members/search/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].name").value("유창근"))
                 .andExpect(jsonPath("$.data.size()").value(1));

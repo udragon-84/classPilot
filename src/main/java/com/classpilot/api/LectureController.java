@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/lecture")
-@Tag(name = "수강 조회 Api", description = "월급쟁이부자들 수강 조회 Api 명세")
+@Tag(name = "강의 조회 및 등록 Api", description = "월급쟁이부자들 강의 조회 및 등록 Api 명세")
 public class LectureController {
 
     @Autowired
     private LectureService lectureService;
 
-    @Operation(summary = "수강 정보 조회 Api 정렬 기준 (최근 등록순:createdAt(default) | 신청자 많은 순:currentStudentCnt | 신청률 높은 순: enrollmentRate) 수강정보명 조회 속성: lectureName", description = "수강 정보 조회 Api")
+    @Operation(summary = "강의 정보 조회 Api 정렬 기준 (최근 등록순:createdAt(default) | 신청자 많은 순:currentStudentCnt | 신청률 높은 순: enrollmentRate) 수강정보명 조회 속성: lectureName", description = "강의 정보 조회 Api")
     @GetMapping(value = "/search")
     public ClassPilotResponse<Page<LectureDto>> getSearchLectures(
                 @Parameter(description = "페이지 번호 (기본값: 1)", name = "page")
@@ -59,7 +59,7 @@ public class LectureController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "강의 정보 등록 json 파라메터 정의",
                     required = true,
-                    content = @Content(schema = @Schema(implementation = MemberDto.class), examples = @ExampleObject(
+                    content = @Content(schema = @Schema(implementation = LectureRegisterDto.class), examples = @ExampleObject(
                             value = "{\"memberId\": 1, \"lectureName\": \"너나위의 내집마련 중급반\", \"maxStudents\": 20, \"price\": 200000 }")))
             @Valid @RequestBody LectureRegisterDto lectureDto) {
         log.info("LectureController.registerLecture lectureDto: {}", lectureDto);

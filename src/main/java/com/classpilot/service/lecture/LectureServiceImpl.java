@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
-
 
 @Slf4j
 @Service
@@ -64,6 +62,18 @@ public class LectureServiceImpl implements LectureService {
         return Optional.of(this.lectureRepository.save(LectureConverter.toEntity(lectureDto)))
                 .map(dto -> LectureConverter.toDomain(dto, memberDto.getName()))
                 .orElseThrow(() -> new DomainException("강의 등록에 실패 했습니다."));
+    }
+
+    @Override
+    public LectureDto findLectureById(Long id) {
+        return this.lectureRepository.findById(id)
+                .map(entity -> LectureConverter.toDomain(entity, null))
+                .orElse(null);
+    }
+
+    @Override
+    public int incrementStudentCountIfNotFull(Long lectureId) {
+        return this.lectureRepository.incrementStudentCountIfNotFull(lectureId);
     }
 
 }

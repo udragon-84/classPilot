@@ -20,6 +20,7 @@ CREATE TABLE lecture (
     lectureId BIGINT AUTO_INCREMENT PRIMARY KEY,
     lectureName VARCHAR(100) NOT NULL,
     maxStudents INT NOT NULL,
+    currentStudentCnt INT DEFAULT 0,
     price INT NOT NULL,
     instructorId BIGINT,
     createdAt DATETIME(6) NOT NULL,

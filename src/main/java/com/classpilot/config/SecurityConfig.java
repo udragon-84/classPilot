@@ -17,6 +17,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/actuator/**").authenticated() // actuator 엔드포인트 인증 필요
                         .requestMatchers("/h2-console/**").permitAll() // h2-console 은 인즈없이 사용 가능
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .anyRequest()
                         .permitAll() // 그 외 모든 요청 허용
                 )

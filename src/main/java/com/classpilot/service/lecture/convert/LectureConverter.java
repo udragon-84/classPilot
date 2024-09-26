@@ -14,7 +14,7 @@ public class LectureConverter {
                 .price((Integer)row[2])
                 .instructorName((String)row[3])
                 .maxStudents((Integer)row[4])
-                .currentStudentCnt(((Long)row[5]).intValue())
+                .currentStudentCnt((Integer)row[5])
                 .enrollmentRate((Double)row[6])
                 .build();
     }
@@ -37,7 +37,7 @@ public class LectureConverter {
                 .lectureId(entity.getLectureId())
                 .lectureName(entity.getLectureName())
                 .price(entity.getPrice())
-                .instructorName(instructorName)
+                .instructorName(Objects.isNull(entity.getInstructor()) ? instructorName : entity.getInstructor().getName())
                 .maxStudents(entity.getMaxStudents())
                 .currentStudentCnt(CollectionUtils.isEmpty(entity.getEnrollmentEntityList()) ? 0 : entity.getEnrollmentEntityList().size())
                 .build();

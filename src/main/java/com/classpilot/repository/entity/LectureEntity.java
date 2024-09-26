@@ -25,6 +25,9 @@ public class LectureEntity extends BaseEntity {
     @Column(name="MAXSTUDENTS")
     private int maxStudents;
 
+    @Column(name="CURRENTSTUDENTCNT")
+    private int currentStudentCnt;
+
     @Column(name="PRICE")
     private int price;
 

@@ -24,7 +24,7 @@ public class LectureDto {
     @NotNull(message = "강의수강료는 필수 입력 정보 입니다.")
     private int price;
 
-    @Schema(description = "강사명", example = "너나위")
+    @Schema(description = "회원명", example = "너나위")
     private String instructorName;
 
     @Schema(description = "강의 수강 인원수", example = "10")
