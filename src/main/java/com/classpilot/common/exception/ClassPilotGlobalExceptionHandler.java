@@ -78,7 +78,7 @@ public class ClassPilotGlobalExceptionHandler {
 
     /**
      * 그 외 나머지 Exception 처리
-     * @param ex 데이터베이스 제약조건 에러 정보
+     * @param ex Exception 에러 정보
      * @return {@link ResponseEntity<ClassPilotResponse>}
      */
     @ExceptionHandler(Exception.class)
